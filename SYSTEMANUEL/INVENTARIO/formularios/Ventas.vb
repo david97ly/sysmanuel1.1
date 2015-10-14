@@ -83,6 +83,13 @@ Public Class Ventas
     'para ver si hay productos
     Public numpr As Short = 0
 
+    'para ver si ya le dio clik al texbox cliente
+    Public ya As Boolean = False
+
+    'Este es el datatable alfa para seleccionar
+    Private dtclisalfa As DataTable
+
+
     Private Sub Ventas_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         If donde = "Cotizar" Then
@@ -131,6 +138,8 @@ Public Class Ventas
     Private Sub Ventas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
          Me.CenterToScreen()
         MdiParent = mdiMain
+        llenarclietes()
+        combotipo_SelectedIndexChanged(sender, e)
         Try
 
             If mdiMain.super Then
@@ -1337,6 +1346,14 @@ Public Class Ventas
         End If
     End Sub
 
+    Private Sub texcliente_Click(sender As Object, e As EventArgs) Handles texcliente.Click
+        If Not ya Then
+            Me.texcliente.Text = ""
+            ya = True
+        End If
+
+    End Sub
+
     Private Sub texcliente_DoubleClick(sender As Object, e As EventArgs) Handles texcliente.DoubleClick
         Try
             frmc.donde = "ventas"
@@ -1352,6 +1369,7 @@ Public Class Ventas
     Dim dtclcf As DataTable
     Dim cf = False, cc As Boolean = False
 
+   
 
     'Private Sub texcliente_Enter(sender As Object, e As EventArgs) Handles texcliente.Enter
     '  
@@ -1361,28 +1379,14 @@ Public Class Ventas
 
     Private Sub texcliente_KeyPress(sender As Object, e As KeyPressEventArgs) Handles texcliente.KeyPress
         If (Asc(e.KeyChar)) = 13 Then
-            llenar()
+            gridclientes_DoubleClick(sender, e)
         End If
     End Sub
 
 
     Dim entert As Boolean = False
 
-    Private Sub llenar()
-        Try
-            llenara = True
-            If Me.combotipo.Text = "Factura" Then
-                Me.texcliente.Text = dtclcf.Rows(0).Item(1).ToString
-                Me.idcliente = dtclcf.Rows(0).Item(0).ToString
-            Else
-             
-            End If
-            entert = True
-        Catch ex As Exception
-
-        End Try
-
-    End Sub
+  
 
 
     Private Sub checkimprimir_CheckedChanged(sender As Object, e As EventArgs)
@@ -1398,4 +1402,62 @@ Public Class Ventas
     End Sub
 
  
+    Private Sub texcliente_TextChanged(sender As Object, e As EventArgs) Handles texcliente.TextChanged
+        If Me.texcliente.Text = "" Then
+            llenarclietes()
+
+        Else
+            Dim dv As DataView = dtclisalfa.DefaultView
+            'dv.RowFilter = "nombre like '" & Me.texbusquedacodigonombre.Text.Trim.ToString & " '"
+            dv.RowFilter = "Cliente like '%" & Me.texcliente.Text.Trim.ToString & "%'"
+
+            gridclientes.DataSource = dv
+            dtclisalfa = dv.ToTable
+
+            If dv.Count = 0 Then
+                Me.gridclientes.Visible = False
+            Else
+                Me.gridclientes.Visible = True
+
+            End If
+
+        End If
+
+
+    End Sub
+
+    Private Sub llenarclietes()
+        Dim dtcli As DataTable
+        dtcli = consultar.Consultar(" SELECT   cliente as 'Cliente' , idclientescf as 'ID' FROM clientescf ")
+        dtclisalfa = dtcli
+        gridclientes.DataSource = dtcli
+
+       
+
+
+    End Sub
+
+   
+
+
+    
+
+    Private Sub gridclientes_DoubleClick(sender As Object, e As EventArgs) Handles gridclientes.DoubleClick
+        Try
+            Dim id As Short = Me.gridclientes.CurrentCell.RowIndex
+            Dim dtrcli As DataRow = dtclisalfa.Rows(id)
+
+            Me.texcliente.Text = dtrcli.Item(0).ToString
+
+            Me.idcliente = dtrcli.Item(1).ToString
+            llenara = True
+            Me.gridclientes.Visible = False
+        Catch ex As Exception
+
+        End Try
+
+
+    End Sub
+
+   
 End Class

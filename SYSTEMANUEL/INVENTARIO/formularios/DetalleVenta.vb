@@ -822,7 +822,7 @@ Public Class DetalleVenta
 
                 For i As Integer = 0 To dtdetallefacturav.Rows.Count - 1
                     dtproducto = tproductos.Consultar(" where codproducto = '" + dtdetallefacturav.Rows(i).Item(2).ToString + "'")
-                    c = CDbl(CDbl(dtproducto.Rows(0).Item(6)) - dtdetallefacturav.Rows(i).Item(3))
+                    c = CDbl(CDbl(dtproducto.Rows(0).Item(6)) + dtdetallefacturav.Rows(i).Item(3))
                     consultar.Consultar(" update productos set existencias = " + c.ToString + " where codproducto = '" + dtdetallefacturav.Rows(i).Item(2).ToString + "'")
                 Next
 

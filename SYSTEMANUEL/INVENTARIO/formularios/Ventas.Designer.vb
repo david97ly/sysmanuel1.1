@@ -23,7 +23,7 @@ Partial Class Ventas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.comboformapago = New System.Windows.Forms.ComboBox()
         Me.lforma = New System.Windows.Forms.Label()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
@@ -82,11 +82,13 @@ Partial Class Ventas
         Me.botagregar = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.texiva = New System.Windows.Forms.TextBox()
+        Me.gridclientes = New System.Windows.Forms.DataGridView()
         Me.grubdescuento.SuspendLayout()
         CType(Me.gridcompra, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.gridclientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'comboformapago
@@ -405,15 +407,15 @@ Partial Class Ventas
         Me.gridcompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridcompra.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.codigo, Me.cantida, Me.nombr, Me.preciu, Me.preciod, Me.exentas, Me.tota})
         Me.gridcompra.ContextMenuStrip = Me.ContextMenuStrip1
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.gridcompra.DefaultCellStyle = DataGridViewCellStyle1
-        Me.gridcompra.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.gridcompra.DefaultCellStyle = DataGridViewCellStyle2
+        Me.gridcompra.GridColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(215, Byte), Integer), CType(CType(229, Byte), Integer))
         Me.gridcompra.Location = New System.Drawing.Point(8, 177)
         Me.gridcompra.Name = "gridcompra"
         Me.gridcompra.ReadOnly = True
@@ -630,12 +632,25 @@ Partial Class Ventas
         Me.texiva.TabIndex = 98
         Me.texiva.Text = "0.0"
         '
+        'gridclientes
+        '
+        Me.gridclientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.gridclientes.ColumnHeadersVisible = False
+        Me.gridclientes.Location = New System.Drawing.Point(64, 79)
+        Me.gridclientes.Name = "gridclientes"
+        Me.gridclientes.RowHeadersVisible = False
+        Me.gridclientes.ScrollBars = System.Windows.Forms.ScrollBars.None
+        Me.gridclientes.Size = New System.Drawing.Size(100, 114)
+        Me.gridclientes.TabIndex = 123
+        Me.gridclientes.Visible = False
+        '
         'Ventas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.ClientSize = New System.Drawing.Size(896, 571)
+        Me.Controls.Add(Me.gridclientes)
         Me.Controls.Add(Me.botagregar)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.combotipo)
@@ -685,6 +700,7 @@ Partial Class Ventas
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.gridclientes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -747,4 +763,5 @@ Partial Class Ventas
     Friend WithEvents preciod As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents exentas As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents tota As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents gridclientes As System.Windows.Forms.DataGridView
 End Class

@@ -66,7 +66,7 @@ Public Class Kardex
             'Dim imagendemo As ItextSharp.text.Image 'Declaracion de una imagen
             Dim tabla1 As New PdfPTable(4) 'declara la tabla con 4 Columnas
 
-            nombre = "Kardex" & dtrproductos.Item(1).ToString & ".pdf"
+            nombre = "Kardex.pdf"
 
           
 
