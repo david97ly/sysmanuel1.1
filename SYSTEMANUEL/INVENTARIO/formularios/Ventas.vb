@@ -80,6 +80,9 @@ Public Class Ventas
     'Variable para el limite de ventas
     Public numproductos As Short = 0
 
+    'para ver si hay productos
+    Public numpr As Short = 0
+
     Private Sub Ventas_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         If donde = "Cotizar" Then
@@ -99,9 +102,28 @@ Public Class Ventas
                 End If
 
                 mdiMain.teclas = False
+
+            Else
+                If numpr > 0 Then
+                    If Not guardado Then
+                        If MsgBox("Desea guardar el documento", MsgBoxStyle.YesNo, "aviso") = MsgBoxResult.Yes Then
+                            botguardar_Click(sender, e)
+                        Else
+                            consultar.Consultar(" delete from detalleventa where codfacturav = '" & codfactura & "'")
+                            consultar.Consultar(" delete from facturaventa where codfacturav = " & codfactura)
+                        End If
+                    End If
+
+                Else
+                    consultar.Consultar(" delete from detalleventa where codfacturav = '" & codfactura & "'")
+                    consultar.Consultar(" delete from facturaventa where codfacturav = " & codfactura)
+                End If
             End If
 
         End If
+
+  
+
 
 
     End Sub
@@ -234,7 +256,7 @@ Public Class Ventas
                             ncf = CInt(dtcf.Rows(0).Item(0))
                             idcliente = ncf
                         Else
-                            idcliente = CInt(5403)
+                            idcliente = CInt(1)
                         End If
 
 
@@ -299,6 +321,7 @@ Public Class Ventas
     Private Sub insertardetalle()
         Try
 
+            numpr += 1
             Dim prereal As Double
             Dim ventatotal As Double = CDbl(Me.textotalp.Text.ToString)
 
@@ -1057,6 +1080,7 @@ Public Class Ventas
 
             If MsgBox("Esta seguro de quitar el producto de la factura? ", MsgBoxStyle.YesNo, "Aviso") = MsgBoxResult.Yes Then
                 consultar.Consultar("delete from detalleventa where coddetallefacturav = " & dtrdetalle.Item(0))
+                numpr -= 1
                 cargarfactura()
             End If
 

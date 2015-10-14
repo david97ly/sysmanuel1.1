@@ -14,7 +14,7 @@ Public Class compra
     Private nombretabladetallefacturac As String
     Public primeraf As Boolean = True
     Private primeradf As Boolean = True
-    Public codfacturac As String
+    Public codfacturac As String = "0"
     Private dtcodfactura As DataTable
     Dim d, m, a, f As String
     Private pr = False, dr = False, tip = False, frmp = False, numf = False
@@ -72,7 +72,9 @@ Public Class compra
     Public estado As String = "nuevo"
     Private guardar As Boolean = False
 
-   
+
+    'para ver si ya ingreso un articulo
+    Public numpr As Short = 0
     Private Sub compra_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         If estado = "editando" Then
@@ -85,6 +87,21 @@ Public Class compra
 
 
             mdiMain.teclas = False
+        Else
+            If numpr > 0 Then
+                If Not guardar Then
+                    If MsgBox("Desea guardar el documento", MsgBoxStyle.YesNo, "aviso") = MsgBoxResult.Yes Then
+                        botguardar_Click_1(sender, e)
+                    Else
+                        consultar.Consultar(" delete from detallecompra where codfacturac = '" & codfacturac & "'")
+                        consultar.Consultar(" delete from facturacompra where codfacturac = " & codfacturac)
+                    End If
+                End If
+
+            Else
+                consultar.Consultar(" delete from detallecompra where codfacturac = '" & codfacturac & "'")
+                consultar.Consultar(" delete from facturacompra where codfacturac = " & codfacturac)
+            End If
         End If
 
     End Sub
@@ -123,9 +140,11 @@ Public Class compra
             Me.texnumfact.Text = dtfacturacompra.Rows(0).Item(1)
             Me.textiraje.Text = dtfacturacompra.Rows(0).Item(14)
             Me.DateTimePicker1.Value = dtfacturacompra.Rows(0).Item(4).ToString
-            If Me.dtfacturacompra.Rows(0).Item(11).ToString <> "0" Then
+
+            If Me.dtfacturacompra.Rows(0).Item(12).ToString <> "0" Then
                 Me.checuno.Checked = True
             End If
+
             Me.primeraf = False
 
             Dim num As Double = CDbl(dtfacturacompra.Rows(0).Item(10))
@@ -231,7 +250,7 @@ Public Class compra
 
     Private Sub insertardetalle()
         Try
-
+            numpr += 1
 
             Dim prereal As Double
             Dim ventatotal As Double = CDbl(Me.textotalp.Text.ToString)
@@ -666,6 +685,7 @@ Public Class compra
 
             If MsgBox("Esta seguro de quitar el producto de la factura? ", MsgBoxStyle.YesNo, "Aviso") = MsgBoxResult.Yes Then
                 consultar.Consultar("delete from detallecompra where coddetallefacturac = " & dtrdetalle.Item(0))
+                numpr -= 1
                 cargarfactura()
             End If
 

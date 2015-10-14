@@ -225,8 +225,9 @@ Public Class DetalledelaCompra
                     dtproducto = tproductos.Consultar(" where codproducto = '" + dtdetallefacturacompra.Rows(i).Item(2).ToString + "'")
                     c = CDbl(CDbl(dtproducto.Rows(0).Item(6)) - dtdetallefacturacompra.Rows(i).Item(3))
                     consultar.Consultar(" update productos set existencias = " + c.ToString + " where codproducto = '" + dtdetallefacturacompra.Rows(i).Item(2).ToString + "'")
-                Next
 
+                Next
+                consultar.Consultar(" delete from detallecompra where codfacturac = '" & dtfacturac.Rows(contador).Item(0) & "'")
                 consultar.Consultar(" delete from facturacompra where codfacturac = " & dtfacturac.Rows(contador).Item(0))
                 salirdetalle()
 
